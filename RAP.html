@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+</head>
+<body>
+<div id="mock"></div>
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script src="http://rap.taobao.org/rap.plugin.js?projectId=30721&mode=1"></script>
+<script type="text/javascript">
+	$(function(){
+		// $.getJSON('http://localhost:3000',function(data){
+		// 	console.log(data.list[0])
+		// })
+		// $.getJSON('http://localhost:3000/user?id=1',function(data){
+		// 	console.log(data.list[0])
+		// })
+		// $.getJSON('http://localhost:3000/user?id=2',function(data){
+		// 	console.log(data.list[1])
+		// })
+		$.ajax({
+			url:'aa',
+			method:'get',
+			data:{
+				'id':1
+			},
+			success:function(data){
+				console.log(data)
+				$('#mock').text(data.name)
+			}
+		})
+	})
+</script>
+</body>
+</html>
