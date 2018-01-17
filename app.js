@@ -1,10 +1,11 @@
 var express = require('express');
 var Mock = require('mockjs');
 var swig  = require('swig');
+var path  = require('path');
 var bodyParser = require('body-parser');
 var app = express();
 app.use(bodyParser.json())//添加json解析器 
-
+app.use(express.static('views'));
 //跨域
 app.all('*', function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -14,6 +15,26 @@ app.all('*', function(req, res, next) {
     if(req.method=="OPTIONS") res.send(200);/*让options请求快速返回*/
     else  next();
 });
+//list
+app.get('/list',function (req, res) {
+	var template = swig.compileFile(path.join(__dirname,'/views/list/','index.html'));  
+	var output = template({
+	    title: 'mock数据模拟'
+	});
+	res.end(output)
+})
+app.get('/list_date',function (req, res) {
+	res.send(require('./nodeuii/list_date.js'));
+})
+app.get('/select_date',function (req, res) {
+	let pid;
+	if(req.originalUrl.indexOf('=')!=-1){
+		pid=req.originalUrl.split('=')[1];
+		res.send(require('./nodeuii/select_date2.js'));
+	}else{
+		res.send(require('./nodeuii/select_date.js'));
+	}
+})
 //mockJS页面是引用mockJS，路由自己配置，json生成轻松
 app.get('/mockJS',function (req, res) {
 	var template = swig.compileFile('mockJS.html');  
