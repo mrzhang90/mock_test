@@ -16,6 +16,18 @@ app.all('*', function(req, res, next) {
     else  next();
 });
 //list
+app.get('/gettime',function (req, res) {
+	var data = Mock.mock({
+		// 属性 list 的值是一个数组，其中含有 1 到 10 个元素
+		'data|8': [{
+				"title": '@cword(3,8)',
+            	"start|1": ['2018-01-17','2018-01-18','2018-01-19','2018-01-20','2018-01-21','2018-01-22','@now']
+			}]
+	})
+	console.log(JSON.stringify(data))
+	res.send(JSON.stringify(data.data))
+})
+//list
 app.get('/list',function (req, res) {
 	var template = swig.compileFile(path.join(__dirname,'/views/list/','index.html'));  
 	var output = template({
@@ -30,7 +42,7 @@ app.get('/picture_date',function (req, res) {
 		'data|10': [{
 				"sort|+1": 1,
 				"image": Mock.Random.image('200x100',Mock.mock('@color'), 'HELLO'),
-				"title":"@cparagraph",
+				"title":"@csentence",
 				"link":"http://www.baidu.com",
 				"datetimeStart":"@datetime('yyyy-MM-dd')",
 				"datetimeEnd":"@datetime('yyyy-MM-dd')",
@@ -48,8 +60,8 @@ app.get('/picture_date',function (req, res) {
 app.get('/list_date',function (req, res) {
 	var data = Mock.mock({
 		// 属性 list 的值是一个数组，其中含有 1 到 10 个元素
-		'data|10': [{
-				"sort|+1": 1,
+		'data|15': [{
+				"zhid|+1": [0,1],
 				"image": Mock.Random.image('200x100',Mock.mock('@color'), 'HELLO'),
 				"title":"@cparagraph",
 				"link":"http://www.baidu.com",
@@ -89,6 +101,16 @@ app.get('/select_date',function (req, res) {
 				}]
 		})
 	}
+	res.send(json.data)
+})
+app.get('/selectlx_date',function (req, res) {
+	var json = Mock.mock({
+		// 属性 list 的值是一个数组，其中含有 1 到 10 个元素
+		'data|3': [{
+				"Value|+1": 10,
+				"Display|1":['第一队','第二队','第三队','第四队','第五队']
+			}]
+	})
 	res.send(json.data)
 })
 app.get('/delete_date',function (req, res) {
